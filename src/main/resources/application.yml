@@ -1,0 +1,23 @@
+server:
+  port: 8098
+
+spring:
+    mvc:
+        view:
+            prefix: /WEB-INF/
+            suffix: .jsp
+    datasource:
+        driver-class-name: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://localhost:3306/mybatisprac
+        username: root
+        password: root
+
+mybatis:
+  type-aliases-package: com.example.base.domain
+
+
+# JWT 설정
+jwt:
+  secret: SDFKLSDJLFKJ3LSKDFJKLB9SDFLKJ33KNVLKSDFJ39048SDLKFNBNLSKDRJ405920AKLDSJ34
+  access-token-expiration: 3600000  # 1시간 (밀리초)
+  refresh-token-expiration: 604800000  # 7일 (밀리초)
