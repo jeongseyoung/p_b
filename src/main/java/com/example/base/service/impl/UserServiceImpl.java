@@ -35,15 +35,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseEntity<String> addUser(UserDto user) {
         
-        UserItem userItem = new UserItem(user.getUserId(), 
-                                        user.getFirstName(), 
+        UserItem userItem = new UserItem(user.getFirstName(), 
                                         user.getLastName(), 
                                         user.getUserEmail(),
                                         Role.ROLE_USER,
                                         passwordEncoder.encode(user.getUserPassword()));
 
         int result = userMapper.addUser(userItem);
-        int cntuserId = userMapper.countByuserId(userItem.getUserId());
+        int cntuserId = userMapper.countByuserId(user.getUserId());
 
         log.info("cntuserId {}", cntuserId);
         log.info("result {}", result);

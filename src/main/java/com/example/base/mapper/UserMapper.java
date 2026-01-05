@@ -18,4 +18,6 @@ public interface UserMapper {
     
     int countByuserEmail(@Param("userEmail") String userEmail);
 
+    Optional<UserItem> findByEmail(@Param("userEmail") String userEmail);
+
 }

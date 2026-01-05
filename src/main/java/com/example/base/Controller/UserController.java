@@ -36,4 +36,9 @@ public class UserController {
         
     }
     
+    @GetMapping("/oauth2/callback")
+    public String hi(@RequestParam String param){
+        return "hi";
+    }
+    
 }

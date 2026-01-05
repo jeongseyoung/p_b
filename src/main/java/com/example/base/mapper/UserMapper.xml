@@ -13,15 +13,22 @@
     </select>
 
     <insert id="addUser" parameterType="com.example.base.domain.item.UserItem">
-        INSERT INTO user(userId, firstName, lastName, userEmail, user_Role, userPassword)
-        VALUES (#{user.userId}, #{user.firstName}, #{user.lastName}, #{user.userEmail}, #{user.user_Role}, #{user.userPassword})
+        INSERT INTO user(firstName, lastName, userEmail, user_Role, userPassword)
+        VALUES (#{user.firstName}, #{user.lastName}, #{user.userEmail}, #{user.user_Role}, #{user.userPassword})
     </insert>
 
     <select id="countByuserId" parameterType="long">
         SELECT COUNT(*) FROM user WHERE userId = #{userId}
     </select>
 
-     <select id="countByuserEmail" parameterType="long">
+    <select id="countByuserEmail" parameterType="long">
         SELECT COUNT(*) FROM user WHERE userEmail = #{userEmail}
     </select>
+
+    <!-- Optional<UserItem> findByEmail(@Param("userEmail") String userEmail); -->
+     <select id="findByEmail" resultType="UserItem">
+        SELECT *
+        FROM user
+        WHERE userEmail = #{userEmail}
+     </select>
 </mapper>
