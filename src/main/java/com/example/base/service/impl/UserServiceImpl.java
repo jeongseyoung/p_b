@@ -2,6 +2,7 @@ package com.example.base.service.impl;
 
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService{
     } 
 
     @Override
-    public void addUser(UserDto user) {
+    public ResponseEntity<String> addUser(UserDto user) {
         
         UserItem userItem = new UserItem(user.getUserId(), 
                                         user.getFirstName(), 
@@ -40,9 +41,16 @@ public class UserServiceImpl implements UserService{
                                         user.getUserEmail(),
                                         Role.ROLE_USER,
                                         passwordEncoder.encode(user.getUserPassword()));
+
         int result = userMapper.addUser(userItem);
+        int cntuserId = userMapper.countByuserId(userItem.getUserId());
+
+        log.info("cntuserId {}", cntuserId);
         log.info("result {}", result);
+
         if(result == 0) throw new UserException(UserEnum.ADD_FAILED);
+
+        return ResponseEntity.ok("가입완료");
     }
     
 

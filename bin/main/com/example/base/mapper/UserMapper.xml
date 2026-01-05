@@ -16,4 +16,12 @@
         INSERT INTO user(userId, firstName, lastName, userEmail, user_Role, userPassword)
         VALUES (#{user.userId}, #{user.firstName}, #{user.lastName}, #{user.userEmail}, #{user.user_Role}, #{user.userPassword})
     </insert>
+
+    <select id="countByuserId" parameterType="long">
+        SELECT COUNT(*) FROM user WHERE userId = #{userId}
+    </select>
+
+     <select id="countByuserEmail" parameterType="long">
+        SELECT COUNT(*) FROM user WHERE userEmail = #{userEmail}
+    </select>
 </mapper>

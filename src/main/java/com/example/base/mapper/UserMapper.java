@@ -13,4 +13,9 @@ public interface UserMapper {
     Optional<UserDto> getUser(@Param("userId") long userId);
 
     int addUser(@Param("user") UserItem userItem);
+
+    int countByuserId(@Param("userId") long userId);
+    
+    int countByuserEmail(@Param("userEmail") String userEmail);
+
 }

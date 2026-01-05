@@ -20,19 +20,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class testCon {
+public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/test")
+    @GetMapping("/getUser")
     public ResponseEntity<UserItem> getMethodName(@RequestParam("userId") long id) {
         return ResponseEntity.ok().body(userService.getUser(id));
     }
     
     @PostMapping("/user/insertUser")
-    public ResponseEntity<?> addUser(@RequestBody UserDto user) {
-        userService.addUser(user);
-        return null;
+    public ResponseEntity<String> addUser(@RequestBody UserDto user) {
+        
+        return userService.addUser(user);
+        
     }
     
 }

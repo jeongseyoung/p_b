@@ -22,6 +22,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.base.config.jwt.JwtAuthenticationEntryPoint;
 import com.example.base.config.jwt.JwtAuthenticationFilter;
+import com.example.base.config.oauth.OAuth2AuthenticationFailureHandler;
+import com.example.base.config.oauth.OAuth2AuthenticationSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,8 +38,8 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final UserDetailsService userDetailsService;
-    //private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    //private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -67,25 +69,24 @@ public class SecurityConfig {
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-                // OAuth2 로그인 설정
-                // .oauth2Login(oauth2 -> oauth2
-                //         .authorizationEndpoint(authorization -> authorization
-                //                 .baseUri("/oauth2/authorize")
-                //         )
-                //         .redirectionEndpoint(redirection -> redirection
-                //                 .baseUri("/oauth2/callback/*")
-                //         )
-                //         .successHandler(oAuth2AuthenticationSuccessHandler)
-                //         .failureHandler(oAuth2AuthenticationFailureHandler)
-                // );
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                //OAuth2 로그인 설정
+                .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(authorization -> authorization
+                                .baseUri("/oauth2/authorize"))
+                                .redirectionEndpoint(redirection -> redirection.baseUri("/oauth2/callback/*"))
+                        .successHandler(oAuth2AuthenticationSuccessHandler) 
+                        .failureHandler(oAuth2AuthenticationFailureHandler)
+                );
 
         return http.build();
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        //DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
