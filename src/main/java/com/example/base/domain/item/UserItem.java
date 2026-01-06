@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.example.base.domain.dto.UserDto;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserItem implements OAuth2User {
+public class UserItem implements OAuth2User, UserDetails {
     //private long userId;
     private String firstName;
     private String lastName;
@@ -61,5 +62,15 @@ public class UserItem implements OAuth2User {
     @Override
     public String getName() {
         return this.userEmail;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.userPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.firstName + " " + this.lastName;
     }
 }

@@ -17,8 +17,8 @@ spring:
           registration:
             # Google OAuth2
             google:
-              client-id: 365496219697-clu41o3qaiopdhhskl53gl38rampuci7.apps.googleusercontent.com
-              client-secret: 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
+              client-id: 887576412728-ncmn325tihirmorg9lv2m79fi6jvu92b.apps.googleusercontent.com
+              client-secret: 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
               scope:
                 - email
                 - profile
@@ -70,6 +70,7 @@ jwt:
   access-token-expiration: 3600000  # 1시간 (밀리초)
   refresh-token-expiration: 604800000  # 7일 (밀리초)
 
+#JWT 토큰을 받을 최종 페이지
 app:
   oauth2:
     redirect-uri: http://localhost:8098/oauth2/redirect
@@ -164,4 +165,3 @@ app:
 # # 서버 포트
 # server:
 #   port: 8098
-

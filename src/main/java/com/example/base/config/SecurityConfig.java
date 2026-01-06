@@ -22,6 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.base.config.jwt.JwtAuthenticationEntryPoint;
 import com.example.base.config.jwt.JwtAuthenticationFilter;
+import com.example.base.config.oauth.CustomUserService;
 import com.example.base.config.oauth.OAuth2AuthenticationFailureHandler;
 import com.example.base.config.oauth.OAuth2AuthenticationSuccessHandler;
 
@@ -40,7 +41,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-
+    private final CustomUserService customUserService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -70,12 +71,15 @@ public class SecurityConfig {
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                //OAuth2 로그인 설정
+                // OAuth2 로그인 설정
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(authorization -> authorization
-                                .baseUri("/oauth2/authorize"))
-                                .redirectionEndpoint(redirection -> redirection.baseUri("/oauth2/callback/*"))
-                        .successHandler(oAuth2AuthenticationSuccessHandler) 
+                                .baseUri("/oauth2/authorize")
+                        )
+                        // .redirectionEndpoint(redirection -> redirection
+                        //         .baseUri("/oauth2/callback/*")
+                        // )
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
                         .failureHandler(oAuth2AuthenticationFailureHandler)
                 );
 

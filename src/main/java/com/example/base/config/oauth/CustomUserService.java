@@ -81,20 +81,20 @@ public class CustomUserService extends DefaultOAuth2UserService{
 
         return registerOrUpdateUser(email, name, provider, providerId);
     }
-
     //기존사용자를 업데이트, 없다면 등록(회원가입) -> user db에
     private UserItem registerOrUpdateUser(String email, String name, String provider, String provideId) {
-        Optional<UserItem> existingUser = userMapper.findByEmail(email);
+        Optional<UserItem> existingUserOpt = userMapper.findByEmail(email);
 
-        if(existingUser.isPresent()) {
-            UserItem user = existingUser.get(); //기존유저있으면 일단 가져오기?
-            return user;
-        } else {
-            //없으면 새로운 유저로 등록
-            UserItem newUser = new UserItem(name, "", email, Role.ROLE_USER, "1234");
-            userMapper.addUser(newUser);
-            return newUser;
+        if (existingUserOpt.isPresent()) {
+            return existingUserOpt.get();
         }
-        
+
+        UserItem newUser = new UserItem(name, "", email, Role.ROLE_USER, "1234");
+        log.info("newUser {}", newUser);
+        System.out.println("newUser: " + newUser);
+        userMapper.addUser(newUser);
+
+        //insert 후 반드시 다시 조회
+        return userMapper.findByEmail(email).orElseThrow(() -> new IllegalStateException("OAuth user insert failed"));
     }
 }

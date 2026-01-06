@@ -37,7 +37,6 @@ public class UserDto implements UserDetails{
     //     ROLE_USER,
     //     ROLE_ADMIN;
     // }
-
     @Override
     public String getPassword() {
         return this.userPassword;
