@@ -16,8 +16,8 @@ import java.io.IOException;
 @Component
 public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    @Value("${app.oauth2.redirect-uri}")
-    private String redirectUri;
+    //@Value("${app.oauth2.redirect-uri}")
+    //private String redirectUri;
 
     @Override
     public void onAuthenticationFailure(
@@ -25,8 +25,8 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
             HttpServletResponse response,
             AuthenticationException exception
     ) throws IOException, ServletException {
-        String targetUrl = UriComponentsBuilder.fromUriString(redirectUri)
-                .queryParam("error", exception.getLocalizedMessage())
+        String targetUrl = UriComponentsBuilder.fromUriString("/login_failed")
+                .queryParam("error", "login_failed")
                 .build()
                 .toUriString();
 
