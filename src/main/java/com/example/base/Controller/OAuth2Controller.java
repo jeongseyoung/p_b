@@ -15,8 +15,6 @@ public class OAuth2Controller {
 
     @GetMapping("/login_failed")
     public String redirect_login_failed() {
-        return new String("음?");
+        return new String("음? 실패");
     }
-    
-
 }

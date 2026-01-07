@@ -22,6 +22,10 @@ spring:
               scope:
                 - email
                 - profile
+    #콘솔 색상
+    output:
+      ansi:
+        enabled: always
             
             # # Kakao OAuth2
             # kakao:

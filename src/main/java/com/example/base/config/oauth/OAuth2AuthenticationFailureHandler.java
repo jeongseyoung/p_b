@@ -30,7 +30,7 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 .build()
                 .toUriString();
 
-        log.error("OAuth2 authentication failed: {}", exception.getMessage());
+        log.error("login_failed: {}", exception.getMessage());
 
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
